@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Choose Your Hyperparameters</title>
+	<link rel="stylesheet" href="/static/style.css">
+	<style>
+		@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');
+
+		h1 {
+			margin-top: 0;
+			font-family: 'Lora', serif;
+			text-align: center;
+			padding: 20px;
+			color: #031114;
+		}
+		.submit-btn {
+			background-color: #81aeb8;
+			color: #031114;
+			padding: 10px;
+			font-size: 16px;
+			border: none;
+			cursor: pointer;
+			font-family: 'Lora', serif;
+			border-radius: 2px;
+		}
+		input[type="range"] {
+			width: 100%;
+			height: 6px;
+			margin-bottom: 10px;
+			background-color: #637275;
+			-webkit-appearance: none;
+			appearance: none;
+			border-radius: 5px 5px 5px 5px;
+		}
+		input[type="range"]::-webkit-slider-thumb {
+			-webkit-appearance: none;
+			appearance: none;
+			width: 11px;
+			height: 11px;
+			background-color: #051e24;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		input[type="range"]::-webkit-slider-thumb:hover {
+			transform: scale(1.4);
+		}
+		.lr{
+			margin-top: 5px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container_ind">
+		<h1 class="title">Select Your Environment & Alogorithm</h1>
+		<form action="/selection" method="POST" class="form">
+			<label for="env" class="label">Select Your Environment:</label>
+			<select id="env" name="env" class="select">
+				{% for option in options %}
+				<option value="{{ option }}">{{ option }}</option>
+				{% endfor %}
+			</select>
+			<br>
+			<label for="algo" class="algo">Select Your Algorithm:</label>
+			<select id="algo" name="algo" class="select">
+				{% for option_a in options_a %}
+				<option value="{{ option_a }}">{{ option_a }}</option>
+				{% endfor %}
+			</select>
+			<br>
+			<br>
+			<br>
+			<h1 class="title">Choose Your Hyperparameters</h1>
+
+			<label for="episodes" class="label">Episodes:</label>
+			<input type="range" id="episodes" name="episodes" min="1" max="2000" step="1">
+			<p id="episode_val" class="lr"></p>
+
+<!--			<label for="episodes" class="label">Number of Episodes:</label>-->
+<!--			<input type="text" id="episodes" name="episodes" class="input" placeholder="Enter number of episodes">-->
+
+			<label for="learning_rate" class="label">Learning Rate:</label>
+			<input type="text" id="learning_rate" name="learning_rate" class="input" placeholder="Enter learning rate">
+
+			<label for="gamma" class="label">Discount Factor:</label>
+			<input type="text" id="gamma" name="gamma" class="input" placeholder="Enter discount factor">
+
+			<br>
+			<input type="submit" value="Evaluate" class="submit-btn">
+		</form>
+
+		<script>
+			// Get the range slider element
+			const episode_slider = document.getElementById('episodes');
+			// Get the element to display the value
+			const episode_val = document.getElementById('episode_val');
+
+			// Add an event listener to the range slider to update the value
+			episode_slider.addEventListener('input', function() {
+				// Update the value element with the current value of the slider
+				episode_val.textContent = '> ' + this.value;
+			});
+		</script>
+	</div>
+</body>
+</html>
